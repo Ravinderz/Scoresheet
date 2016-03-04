@@ -1,0 +1,79 @@
+<!DOCTYPE html> 
+<html>
+<head>
+<script src="js/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/bootstrap.min.js"></script>
+
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+<link href="css/signin.css" rel="stylesheet">
+</head>
+<body data-ng-app="myapp" >
+
+	<div class="container" data-ng-controller="validateController">
+	
+	<form class="form-signin"  name="validateForm" novalidate>
+		<h2 class="form-signin-heading">Register</h2>
+		
+		<label for="inputFirstName" class="sr-only">Email address</label>
+		<input type="text" id="inputFirstName" name="firstName" data-ng-model="user.firstName" required class="form-control" placeholder="First Name" autofocus> 
+				<span style="color: red" data-ng-show="validateForm.firstName.$dirty ">
+				<span data-ng-show="validateForm.firstName.$error.required">Email is required.</span></span>
+		
+		<label for="inputLastName" class="sr-only">Email address</label>
+		<input type="text" id="inputLastName" name="lastName" data-ng-model="user.lastName" required class="form-control" placeholder="Last Name" autofocus> 
+				<span style="color: red" data-ng-show="validateForm.lastName.$dirty">
+				<span data-ng-show="validateForm.lastName.$error.required">Email is required.</span></span>
+		
+		
+		<label for="inputEmail" class="sr-only">Email address</label>
+		<input type="email" id="inputEmail" name="email" data-ng-model="user.email" required class="form-control" placeholder="Email Address" autofocus> 
+				<span style="color: red" data-ng-show="validateForm.email.$dirty && validateForm.email.$invalid">
+				<span data-ng-show="validateForm.email.$error.required">Email is required.</span>
+				<span data-ng-show="validateForm.email.$error.email">Invalid Email.</span></span>
+		
+		<label for="inputPassword" class="sr-only">Password</label>		 
+		<input type="password" id="inputPassword" class="form-control" placeholder="Password" name="pword" data-ng-model="user.pword" required data-ng-minlength="6" data-ng-maxlength="15">
+		 <span style="color: red" data-ng-show="validateForm.pword.$dirty && validateForm.pword.$invalid">
+			<span data-ng-show="validateForm.pword.$error.required">Password is required.</span> 
+			<span data-ng-show="validateForm.pword.$error.minlength">password is too short</span>
+			<span data-ng-show="validateForm.pword.$error.maxlength">password is too long</span></span><br />
+			
+		<input type="submit" class="btn btn-primary btn-lg btn-block" data-ng-click="registerUser()"
+			data-ng-disabled="validateForm.pword.$dirty && validateForm.pword.$invalid || validateForm.email.$dirty && validateForm.email.$invalid">
+	</form>
+	{{status}}
+	</div>
+	<script>
+	var app = angular.module('myapp',[]);
+	app.controller('validateController',function($scope,$http){
+		$scope.status='Not Ready';
+		console.log($scope.user);
+		
+		$scope.registerUser = function(){
+			console.log(JSON.stringify($scope.user));
+			console.log($scope.user.email);
+			console.log($scope.user.firstName);
+			 $http({
+				 url: 'rest/user/register', 
+				 method: 'POST',
+				  headers: { 'Content-Type': 'application/json' },
+				    data: JSON.stringify($scope.user)
+				}).then(function successCallback(response) {
+				    $scope.status="we got a response from rest "+response.data;
+				  }, function errorCallback(response) {
+				    $scope.status = "we got a exception "+response.data;
+				  });
+			if($scope.email === "ravinderz@outlook.com" && $scope.pword==="letmein"){
+				console.log("valid user");
+			} 
+		};
+		
+	});
+	</script>
+
+</body>
+</html>

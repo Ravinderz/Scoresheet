@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/angular.js"></script>
+<script src="js/angular-route.js"></script>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/bootstrap.min.js"></script>
+<script src="js/LCA.js"></script>
+</head>
+<body data-ng-app="LCA" data-ng-controller="initialController">
+
+<div class="container">
+<div id="player_count">
+</br></br></br>
+No of players : <input type="number" min="2" max="8" data-ng-model="playerNumber" data-ng-click="makeArray()"/> &nbsp;&nbsp;
+
+
+					
+
+
+Enter the game score to be played : <input type="text" id="game_score" data-ng-model="game_score" /><br/></br>
+<div id="players"  data-ng-repeat="n in arr">
+Player{{n+1}} Name :&nbsp;<input type="text"  data-ng-model=playerNames[n] data-ng-change="insertNames()" /> <br></div>
+<br><br>
+
+<div  data-ng-hide="!playerNumber">
+<button data-ng-click="submit()" >Enter</button><br/>
+</div>
+</div>
+</div>
+</body>
+</html>
