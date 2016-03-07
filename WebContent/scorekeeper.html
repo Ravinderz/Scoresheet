@@ -24,15 +24,15 @@
 	<td data-ng-repeat ="data in row track by $index">{{data}}</td>
 	</tr>
 	<tr>
-	<td data-ng-repeat= "n in colArr"><input type="text" data-ng-model=rowData[n]  /></td>
-	<!-- </tr>
+	<td data-ng-repeat= "n in colArr"><input type="text" id="col{{n}}"data-ng-model=rowData[n]  /></td>
+	</tr>
 	<tr data-ng-repeat = "scores in scoreArr " >
 	<td data-ng-repeat ="score in scores track by $index">{{score}}</td>
-	</tr> -->
+	</tr>
 	</tbody>
 </table>
 <button data-ng-click="add();">add</button>
-<button data-ng-click="printJSON();">View JSON</button>
+<button data-ng-click="stop();">stop</button>
 </div>
 </body>
 </html>
