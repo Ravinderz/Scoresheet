@@ -10,7 +10,7 @@
 <script src="js/bootstrap.min.js"></script>
 <script src="js/scorekeeper.js"></script>
 </head>
-<body data-ng-app="scorekeeper" data-ng-controller="scoresheetController">
+<body data-ng-app="LCA" data-ng-controller="scoresheetController">
 <div class="container">
 
 <table class="table table-striped col-md-8">
@@ -23,16 +23,17 @@
 	<tr data-ng-repeat = "row in rowArr" >
 	<td data-ng-repeat ="data in row track by $index">{{data}}</td>
 	</tr>
-	<tr>
-	<td data-ng-repeat= "n in colArr"><input type="text" id="col{{n}}"data-ng-model=rowData[n]  /></td>
+	<tr id="table-body">
+	<td data-ng-repeat= "n in colArr" ><input type="text" id="col{{n}}" data-ng-model=rowData[n] placeholder="{{playerNames[n]}}" /></td>
 	</tr>
 	<tr data-ng-repeat = "scores in scoreArr " >
-	<td data-ng-repeat ="score in scores track by $index">{{score}}</td>
+	<td data-ng-repeat ="score in scores track by $index" id="cell{{$index}}">{{score}} </td>
 	</tr>
 	</tbody>
 </table>
-<button data-ng-click="add();">add</button>
-<button data-ng-click="stop();">stop</button>
+<button  data-ng-click="add();">add</button>
+<button  data-ng-click="stop();">stop</button>
+<div><h1>{{winner}}</h1></div>
 </div>
 </body>
 </html>
