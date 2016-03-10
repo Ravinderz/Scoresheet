@@ -30,6 +30,12 @@ LCA.controller('myController',['$scope','$location',function($scope,$location){
 LCA.service('playerNameService',function(){
 	var playerNames = []; 
 	var gameScore = "";
+	var gameId = "";
+	
+	this.addGameID = function(newObj){
+		console.log("inside addnames",newObj);
+		gameId = newObj;
+	};
 	
 	this.addNames = function(newObj){
 		console.log("inside addnames",newObj);
@@ -47,7 +53,11 @@ LCA.service('playerNameService',function(){
 	
 	this.getGameScore = function(){
 		return gameScore;
-	}
+	};
+	
+	this.getGameID = function(){
+		return gameId;
+	};
 	});
 
 
@@ -102,13 +112,17 @@ LCA.controller('initialController',['$location','$scope','$http','playerNameServ
 		var finData = {Names : $scope.playerNames,Score : $scope.game_score};
 		console.log("finData: ",JSON.stringify(finData));
 		 $http({
-			 url: 'rest/user/register', 
+			 url: 'rest/gamestart/details', 
 			 method: 'POST',
 			  headers: { 'Content-Type': 'application/json' },
 			    data: JSON.stringify(finData)
 			}).then(function successCallback(response) {
 			    $scope.status="we got a response from rest "+response.data;
+			    console.log(response.data);
+			    if(response.data.Msg === "Success"){
+			    playerNameService.addGameID(response.data.Id);	
 			    $location.path("/scoresheet");
+			    }
 			    //window.location = "scoresheet.html";
 			  }, function errorCallback(response) {
 			    $scope.status = "we got a exception "+response.data;
@@ -207,12 +221,13 @@ LCA.controller('scoresheetController',['$scope','$http','playerNameService',func
 			console.log("json playerSet",JSON.stringify($scope.playerSet));
 
 		}
-		console.log("totals",totals());
+		
 		$scope.rowArr = chunk($scope.inputData,$scope.playerNames.length);
 		$scope.totalScores = totals();
+		console.log("totals",$scope.totalScores);
+		$scope.scoreArr = chunk($scope.totalScores,$scope.playerNames.length);
 		maxScore();
 		gameOver();
-		$scope.scoreArr = chunk($scope.totalScores,$scope.playerNames.length);
 		console.log($scope.scoreArr);
 
 	};
@@ -267,7 +282,7 @@ LCA.controller('scoresheetController',['$scope','$http','playerNameService',func
 			if($scope.totalScores[i] >= gameScore){
 				console.log(gameScore ,"inside if " ,$scope.totalScores[i]);
 				if(gameOverPlayersList[i] === $scope.playerNames[i]){
-					
+					//just not to add the same player
 				}else{
 				gameOverPlayersList.push($scope.playerNames[i]);
 				}
@@ -286,7 +301,29 @@ LCA.controller('scoresheetController',['$scope','$http','playerNameService',func
 			winner();
 		}
 	}
-
+	
+	/*function scorecard(){
+		$scope.scoreCard = [];
+		$scope.details = [];
+		var fullCount = 0;  
+		var showCount = 0;
+		for(var i = 0; i < playerSet.length;i++){
+			var playerObj = playerSet[i];
+			//$Scope.details.push({Name : playerObj.Name,})
+			for(j=0;j < playerObj.Scores.length;j++){
+				if(playerObj.Scores[j] === "40")
+				fullCount++;
+				if(playerObj.Scores[j] === "XX")
+				showCount++;
+			}
+			$scope.details.push({Name : playerObj.Name, FullCount : fullCount, Shows : showCount});
+		}
+		$scope.scoreCard.push({Details : $scope.details , GameId : "100", Winner : $scope.winner});
+		console.log($scope.scoreCard);
+		return $scope.scoreCard;
+	};*/
+	
+	
 	function winner(){
 		$scope.winner = "";
 		var index = 0;
@@ -304,44 +341,65 @@ LCA.controller('scoresheetController',['$scope','$http','playerNameService',func
 					index = i;
 				}
 			}
+			
 	$scope.winner = $scope.playerNames[index];
 	console.log("winner",$scope.winner);
+	scorecard();
 	return $scope.winner;
 	};
 	
+	function scorecard(){
+		$scope.scoreCard = [];
+		$scope.details = [];
+		for(var i = 0; i < $scope.playerSet.length;i++){
+			var playerObj = $scope.playerSet[i];
+			var fullCount = 0;  
+			var showCount = 0;
+			//$Scope.details.push({Name : playerObj.Name,})
+			for(j=0;j < playerObj.Scores.length;j++){
+				if(playerObj.Scores[j] === "40")
+				fullCount++;
+				if(playerObj.Scores[j] === "XX")
+				showCount++;
+			}
+			$scope.details.push({Name : playerObj.Name, FullCount : fullCount, Shows : showCount});
+		}
+		$scope.scoreCard.push({Details : $scope.details , GameId : playerNameService.getGameID, Winner : $scope.winner});
+		console.log("scorecard",JSON.stringify($scope.scoreCard));
+		$http({
+			url: 'rest/gamestart/scorecard', 
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			data: JSON.stringify($scope.scoreCard)
+		}).then(function successCallback(response) {
+			$scope.status="we got a response from rest "+response.data;
+		}, function errorCallback(response) {
+			$scope.status = "we got a exception "+response.data;
+		});
+
+		/*return $scope.scoreCard;*/
+	};
+	
+	
+	
 	$scope.stop = function(){
 		console.log("winner",winner());
-	/*	var winner ="";
-		var index = 0;
-		var minNumber = 0;
-		minNumber= $scope.totalScores[0];
-		console.log("minNumber",minNumber);
-		console.log("totalScores",$scope.totalScores);
-			for(var i=0; i < $scope.totalScores.length ; i++){
-				console.log("inside loop minNumber",minNumber);
-				console.log("totalScores",$scope.totalScores[i]);
-				if(minNumber > parseInt($scope.totalScores[i])){
-					console.log("if minNumber",minNumber);
-					console.log("if totalScores",$scope.totalScores[i]);
-					minNumber = $scope.totalScores[i];
-					index = i;
-				}
-			}	
-	console.log("winner",$scope.playerNames[index]);*/
 	};
 
 	function totals(){
 		var total = [];
 		for(var i = 0 ; i < $scope.playerSet.length ; i++){
-			var score = []
-			score = $scope.playerSet[i].Scores;
+			var score = [];
 			var temp = 0;
-			for(var j=0 ; j < score.length ; j++){
-				if(score[j] === "NA"){
-					score[j] = 0;
-				temp = +temp + +score[j];
+			for(var j=0 ; j < $scope.playerSet[i].Scores.length ; j++){
+				score = $scope.playerSet[i].Scores[j];
+				if(score === "NA" || score === "XX"){
+					console.log("in totals before XX",score);
+					score = 0;
+					console.log(JSON.stringify($scope.playerSet));
+				temp = +temp + +score;
 				}else{
-					temp = +temp + +score[j];
+					temp = +temp + +score;
 				}
 					
 			}

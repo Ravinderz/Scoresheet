@@ -14,21 +14,23 @@
 <body data-ng-app="LCA" data-ng-controller="initialController">
 
 <div class="container">
-<div id="player_count">
+<div id="player_count" ng-form name="main">
 </br></br></br>
-No of players : <input type="number" min="2" max="8" data-ng-model="playerNumber" data-ng-click="makeArray()"/> &nbsp;&nbsp;
+No of players : <input type="number" min="2" max="8" data-ng-model="playerNumber" data-ng-pattern="/^[2-8]{1}$/" name="playerNumber" data-ng-click="makeArray()"/> &nbsp;&nbsp;
+<span data-ng-show="main.playerNumber.$error.pattern">please enter a number between 2 - 8</span>
 
-
-					
-
-
-Enter the game score to be played : <input type="text" id="game_score" data-ng-model="game_score" /><br/></br>
+Enter the game score to be played : <input type="text" id="game_score"  name="gameScore" data-ng-model="game_score" data-ng-pattern="/^[0-9]{1,3}$/" />
+<span data-ng-show="main.gameScore.$error.pattern">please enter a valid Game Score</span><br/></br>
 <div id="players"  data-ng-repeat="n in arr">
-Player{{n+1}} Name :&nbsp;<input type="text"  data-ng-model=playerNames[n] data-ng-change="insertNames()" /> <br></div>
+<data-ng-form name="subform{{$index}}">
+Player{{n+1}} Name :&nbsp;<input type="text"  name="playerNames" data-ng-model="playerNames[n]" data-ng-pattern="/^[a-zA-Z ]*$/" /> <br>
+<span data-ng-show="subform{{$index}}.playerNames.$error.pattern">please enter a valid player Name</span>
+</data-ng-form>
+</div>
 <br><br>
 
 <div  data-ng-hide="!playerNumber">
-<button data-ng-click="submit()" >Enter</button><br/>
+<button data-ng-disabled="main.gameScore.$error.pattern || main.gameScore.$error.pattern || main.playerNames.$error.pattern" data-ng-click="submit()" >Enter</button><br/>
 </div>
 </div>
 </div>
