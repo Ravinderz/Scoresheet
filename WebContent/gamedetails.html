@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script src="js/angular.js"></script>
+<script src="js/angular-route.js"></script>
+<link href="css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/bootstrap.min.js"></script>
+<link href="css/gamedetails.css" rel="stylesheet">
+<script src="js/LCA.js"></script>
+</head>
+<body data-ng-app="LCA" data-ng-controller="initialController">
+<div id="wrap">
+		<div class="container">
+			<div class="row text-center">
+				<div class="col-md-10 col-md-offset-1">
+					<div class="page-header">
+						<h1>Least Count</h1>
+						<h5>Score Tracker</h5>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="container body-content">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-2">
+					<h3>Game Details</h3>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-md-offset-2">
+					<div id="player_count" ng-form name="form1">
+						<span>No of players : </span><input type="number" min="2" max="8"
+							id="input-text" data-ng-model="playerNumber"
+							data-ng-pattern="/^[2-8]{1}$/" name="playerNumber"
+							data-ng-click="makeArray()" /> &nbsp;&nbsp;<div> <span
+							data-ng-show="form1.playerNumber.$error.pattern">please
+							enter a number between 2 - 8</span></div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="text-right">
+					<div id="player_count" ng-form name="main">
+						<span>Game Score : </span><input type="text" id="input-text"
+							name="gameScore" data-ng-model="game_score" required
+							data-ng-pattern="/^[0-9]{1,3}$/" /> <div><span
+							data-ng-show="main.gameScore.$error.pattern">please enter
+							a valid Game Score</span></div> <div><span
+							data-ng-show="main.gameScore.$error.required">Game score
+							cannot be empty</span></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div id="empty-box"><br/></div>
+			<div class="container" id="input-box">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="text-center" id="left">
+						<div id="player_count" ng-form name="sub">
+							<div id="players" data-ng-repeat="n in arr">
+								<data-ng-form name="subform{{$index}}">
+								Player{{n+1}} Name :&nbsp;<input type="text" id="input-text"
+									name="playerNames" data-ng-model="playerNames[n]"
+									data-ng-pattern="/^[a-zA-Z ]*$/" /> <br>
+								<span
+									data-ng-show="subform{{$index}}.playerNames.$error.pattern">please
+									enter a valid player Name</span> </data-ng-form>
+							</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+			<div id="empty-box"><br/></div>
+			<div class="text-center">
+				<button class="btn btn-primary btn-lg"
+					data-ng-disabled="main.gameScore.$error.pattern || main.gameScore.$error.pattern || main.playerNames.$error.pattern"
+					data-ng-click="submit()">Enter</button>
+				<br />
+			</div>
+		</div>
+		<div id="push"></div>
+	</div>
+	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-10 col-md-offset-1">
+					<footer class="text-center">
+						<p>&copy; 2016 LCA Company, Inc.</p>
+					</footer>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

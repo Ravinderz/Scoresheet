@@ -7,6 +7,12 @@ body {
 	color: #fff;
 }
 
+span{
+	padding : 0px;
+	margin : 0px;
+	
+}
+
 #sub-heading {
 	padding-top: 0px;
 }
@@ -17,8 +23,8 @@ body {
 
 #wrap {
 	min-height: 100%;
-	height: auto !important;
-	height: 100%;
+	 height: auto !important; 
+	height: 80%;
 	/* Negative indent footer by it's height */
 	margin: 0 auto -60px;
 }
@@ -32,8 +38,6 @@ body {
 	padding-bottom: 0px;
 }
 
-
-
 .jumbotron {
 	padding-top: 10px;
 	color: #fff;
@@ -42,4 +46,20 @@ body {
 
 .body-content {
 	height: 80%;
+}
+
+#input-text{
+	color:#333;
+}
+
+#input-box{
+	height:50%;
+}
+
+#empty-box:{
+	height:100px;
+}
+
+#left{
+	margin-left: -30px;
 }

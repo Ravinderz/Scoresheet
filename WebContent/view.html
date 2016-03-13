@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+
+<script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script src="js/bootstrap.min.js"></script>
+<script src="js/sample2.js"></script>
+
+<style>
+
+        
+             .axis path, .axis line {
+        fill: none;
+        stroke: white;
+        shape-rendering: crispEdges;
+      }
+      .axis text {
+        font-family: sans-serif;
+        font-size: 17px;
+        fill : white;
+      }
+		      
+      #caption {
+      color:white;
+      }
+      
+      #graph-space{
+      width:50px;}
+      
+        .bar {
+            fill: #e6b800;
+        }
+        body{
+        background-color :#333;
+        }
+        
+        .container{
+        width:100%;
+        }
+        #heading_id{
+        color:#fff;
+        
+        }
+        
+    </style>
+<body data-ng-app ="crunchinatorApp" data-ng-controller="mainCtrl" >
+<br>
+<div align="center">
+
+<h2 id="heading_id">GAME STATISTICS</h2>
+<br><br><br>
+<table class="text-center">
+
+<tr ><td>
+<cr-d3-bars data='fullCountData'></cr-d3-bars>
+</td>
+<td id="graph-space"></td>
+<td>
+<cr-d3-bars data='showsData'></cr-d3-bars>
+</td>
+</tr>
+<tr id="caption" class="text-center">
+<td><h3>Fullcount</h3></td>
+<td id="graph-space"></td>
+<td><h3>Shows</h3></td>
+</tr>
+</table>
+</div>
+</body>
+</html>

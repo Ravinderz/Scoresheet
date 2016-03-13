@@ -32,14 +32,14 @@ body {
 	padding-bottom: 0px;
 }
 
-
-
-.jumbotron {
-	padding-top: 10px;
-	color: #fff;
-	background-color: #333;
-}
-
 .body-content {
 	height: 80%;
+}
+
+.input-text{
+	color:#333;
+}
+
+#gameID{
+	padding-top: 8px;
 }
