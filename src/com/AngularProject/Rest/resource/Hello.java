@@ -1,4 +1,4 @@
-package com.AngularProject.Rest;
+package com.leastcount.resource;
 
 import java.util.HashMap;
 

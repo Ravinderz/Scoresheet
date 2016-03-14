@@ -1,0 +1,45 @@
+html, body {
+	background-color: #333;
+	height: 100%;
+}
+
+body {
+	color: #fff;
+}
+
+#sub-heading {
+	padding-top: 0px;
+}
+
+#start-button {
+	padding-top: 20px;
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/* Negative indent footer by it's height */
+	margin: 0 auto -60px;
+}
+
+#push, #footer {
+	height: 60px;
+}
+
+.page-header {
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+
+
+
+.jumbotron {
+	padding-top: 10px;
+	color: #fff;
+	background-color: #333;
+}
+
+.body-content {
+	height: 80%;
+}
