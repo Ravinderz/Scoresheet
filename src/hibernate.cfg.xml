@@ -16,7 +16,7 @@
 		 
 		 <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
-		  <property name='connection.url'>jdbc:mysql://localhost:3306/default</property>
+		  <property name='connection.url'>jdbc:mysql://localhost:3306/leastCount</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="connection.password">letmein</property>
 		
@@ -30,7 +30,8 @@
     <property name="connection.autoReconnect">true</property>
     <property name="connection.autoReconnectForPools">true</property>
 
-	<mapping class="com.AngularProject.Rest.Model.User" />
+	<mapping class="com.leastcount.model.Game" />
+	<mapping class="com.leastcount.model.GameDetails" />
 	<!-- <mapping class="com.amdocs.corp.model.CorpVersion" />
 	<mapping class="com.amdocs.corp.model.CorpDetails" />
 	<mapping class="com.amdocs.corp.model.CorpRequestDetails" /> -->
